@@ -10,8 +10,8 @@ import java.util.Scanner
 
 class Controller(private val view: View, private val model: Model) {
 
-    private var activeArchive: Archive? = null
-    private var activeNote: Note? = null
+    private lateinit var activeArchive: Archive
+    private lateinit var activeNote: Note
 
     private val scanner = Scanner(System.`in`)
 
@@ -54,7 +54,7 @@ class Controller(private val view: View, private val model: Model) {
     }
 
     private fun noteState() {
-        view.printNote(activeNote!!)
+        view.printNote(activeNote)
 
         notesState()
     }
@@ -76,7 +76,7 @@ class Controller(private val view: View, private val model: Model) {
     private fun createNotesMenu(): MenuList {
         val menuList = MenuList()
         menuList.items.add(MenuItem("Создать заметку") { createNoteState() })
-        for (note in activeArchive!!.notes) {
+        for (note in activeArchive.notes) {
             menuList.items.add(MenuItem(note.name) {
                 activeNote = note
                 noteState()
@@ -131,7 +131,7 @@ class Controller(private val view: View, private val model: Model) {
     }
 
     private fun createNote(name: String, text: String) {
-        activeArchive!!.addNote(Note(name, text))
+        activeArchive.addNote(Note(name, text))
     }
 
 }
